@@ -1,0 +1,59 @@
+mkdir: cannot create directory ‘log’: File exists
+Device Count: 2
+/scratch_net/biwidl311/peerli/conda_envs/liotorch/lib/python3.11/site-packages/torch/cuda/__init__.py:152: UserWarning: 
+    Found GPU0 Tesla K40c which is of cuda capability 3.5.
+    PyTorch no longer supports this GPU because it is too old.
+    The minimum cuda capability supported by this library is 3.7.
+    
+  warnings.warn(old_gpu_warn % (d, name, major, minor, min_arch // 10, min_arch % 10))
+/scratch_net/biwidl311/peerli/conda_envs/liotorch/lib/python3.11/site-packages/torch/cuda/__init__.py:152: UserWarning: 
+    Found GPU1 Tesla K40c which is of cuda capability 3.5.
+    PyTorch no longer supports this GPU because it is too old.
+    The minimum cuda capability supported by this library is 3.7.
+    
+  warnings.warn(old_gpu_warn % (d, name, major, minor, min_arch // 10, min_arch % 10))
+/scratch_net/biwidl311/peerli/conda_envs/liotorch/lib/python3.11/site-packages/torch/cuda/__init__.py:152: UserWarning: 
+    Found GPU0 Tesla K40c which is of cuda capability 3.5.
+    PyTorch no longer supports this GPU because it is too old.
+    The minimum cuda capability supported by this library is 3.7.
+    
+  warnings.warn(old_gpu_warn % (d, name, major, minor, min_arch // 10, min_arch % 10))
+/scratch_net/biwidl311/peerli/conda_envs/liotorch/lib/python3.11/site-packages/torch/cuda/__init__.py:152: UserWarning: 
+    Found GPU1 Tesla K40c which is of cuda capability 3.5.
+    PyTorch no longer supports this GPU because it is too old.
+    The minimum cuda capability supported by this library is 3.7.
+    
+  warnings.warn(old_gpu_warn % (d, name, major, minor, min_arch // 10, min_arch % 10))
+Traceback (most recent call last):
+  File "/home/peerli/Documents/pytorch_helloworld/train_parallel.py", line 38, in <module>
+    mp.spawn(main, args=(world_size, 100, 10, 1000), nprocs=world_size)
+  File "/scratch_net/biwidl311/peerli/conda_envs/liotorch/lib/python3.11/site-packages/torch/multiprocessing/spawn.py", line 239, in spawn
+    return start_processes(fn, args, nprocs, join, daemon, start_method='spawn')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch_net/biwidl311/peerli/conda_envs/liotorch/lib/python3.11/site-packages/torch/multiprocessing/spawn.py", line 197, in start_processes
+    while not context.join():
+              ^^^^^^^^^^^^^^
+  File "/scratch_net/biwidl311/peerli/conda_envs/liotorch/lib/python3.11/site-packages/torch/multiprocessing/spawn.py", line 160, in join
+    raise ProcessRaisedException(msg, error_index, failed_process.pid)
+torch.multiprocessing.spawn.ProcessRaisedException: 
+
+-- Process 0 terminated with the following error:
+Traceback (most recent call last):
+  File "/scratch_net/biwidl311/peerli/conda_envs/liotorch/lib/python3.11/site-packages/torch/multiprocessing/spawn.py", line 69, in _wrap
+    fn(i, *args)
+  File "/home/peerli/Documents/pytorch_helloworld/train_parallel.py", line 27, in main
+    trainer = Trainer(model, dataset, optimizer, rank, batch_size, save_every, os.path.join(base_path, "checkpoints"))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/peerli/Documents/pytorch_helloworld/ddp_trainer.py", line 43, in __init__
+    self.model = self._setup_model(model)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/peerli/Documents/pytorch_helloworld/ddp_trainer.py", line 51, in _setup_model
+    return DDP(model, device_ids=[self.gpu_id])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch_net/biwidl311/peerli/conda_envs/liotorch/lib/python3.11/site-packages/torch/nn/parallel/distributed.py", line 674, in __init__
+    _verify_param_shape_across_processes(self.process_group, parameters)
+  File "/scratch_net/biwidl311/peerli/conda_envs/liotorch/lib/python3.11/site-packages/torch/distributed/utils.py", line 118, in _verify_param_shape_across_processes
+    return dist._verify_params_across_processes(process_group, tensors, logger)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: NCCL Error 1: unhandled cuda error
+
